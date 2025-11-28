@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paket Telegram Premium</title>
+
+  <style>
+    body {
+      background-color: #071020;
+      color: #e6eef6;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 28px;
+      color: #ffb86b;
+      text-shadow: 0 0 8px rgba(255,184,107,0.6);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      padding-bottom: 50px;
+    }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: .3s;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+      border-color: #ffb86b;
+    }
+
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
+      color: #ffb86b;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #ff6b6b;
+    }
+
+    .desc {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      color: #071527;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 22px rgba(255,110,60,0.25);
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 40px auto;
+      width: 85%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      opacity: 0.6;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    /* POPUP */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .popup {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      width: 350px;
+      border-radius: 12px;
+      text-align: center;
+      color: #e6eef6;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      animation: popupFade 0.3s ease;
+    }
+
+    @keyframes popupFade {
+      from { opacity: 0; transform: scale(0.9);}
+      to   { opacity: 1; transform: scale(1);}
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #ffb86b;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .close-btn:hover {
+      color: #ffffff;
+      transform: scale(1.15);
+    }
+
+    .popup-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #ffb86b;
+    }
+
+    .popup button {
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      padding: 10px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #071527;
+      font-size: 16px;
+      margin-top: 25px;
+      box-shadow: 0 8px 25px rgba(255,110,60,0.3);
+      transition: .3s;
+      font-weight: bold;
+    }
+
+    .popup button:hover {
+      transform: scale(1.05);
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Telegram Premium - Official Store</h1>
+
+  <div class="container">
+
+    <!-- PILIHAN PAKET -->
+    <div class="package-grid">
+
+      <div class="card">
+        <h2>Premium 1 Bulan</h2>
+        <p class="price">Rp 49.000</p>
+        <p class="desc">Unlock fitur eksklusif Telegram Premium selama 30 hari.</p>
+        <div class="btn" onclick="showPopup('Premium 1 Bulan','Rp 49.000')">Berikutnya</div>
+      </div>
+
+      <div class="card">
+        <h2>Premium 3 Bulan</h2>
+        <p class="price">Rp 139.000</p>
+        <p class="desc">Lebih hemat dibandingkan pembelian bulanan.</p>
+        <div class="btn" onclick="showPopup('Premium 3 Bulan','Rp 139.000')">Berikutnya</div>
+      </div>
+
+      <div class="card">
+        <h2>Premium 6 Bulan</h2>
+        <p class="price">Rp 269.000</p>
+        <p class="desc">Dapatkan fitur premium lebih lama dengan harga lebih murah.</p>
+        <div class="btn" onclick="showPopup('Premium 6 Bulan','Rp 269.000')">Berikutnya</div>
+      </div>
+
+      <div class="card">
+        <h2>Premium 12 Bulan</h2>
+        <p class="price">Rp 499.000</p>
+        <p class="desc">Paket terbaik dan paling hemat. Bayar sekali nikmati setahun.</p>
+        <div class="btn" onclick="showPopup('Premium 12 Bulan','Rp 499.000')">Berikutnya</div>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h1>Fitur Telegram Premium</h1>
+
+    <div class="package-grid">
+
+      <div class="card">
+        <h2>Upload 4GB</h2>
+        <p class="desc">Kirim file maksimal 4GB tanpa batasan.</p>
+      </div>
+
+      <div class="card">
+        <h2>No Ads</h2>
+        <p class="desc">Bebas dari gangguan iklan di channel publik.</p>
+      </div>
+
+      <div class="card">
+        <h2>Faster Download</h2>
+        <p class="desc">Kecepatan unduhan lebih cepat daripada akun biasa.</p>
+      </div>
+
+      <div class="card">
+        <h2>Unique Badge</h2>
+        <p class="desc">Tanda premium ada di profil kamu.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>© 2025 Telegram Premium Store - Indonesia</footer>
+
+  <!-- POPUP -->
+  <div class="overlay" id="checkoutBox">
+    <div class="popup">
+      <div class="close-btn" onclick="closePopup()">✕</div>
+      <div class="popup-title">Konfirmasi</div>
+      <p>Pilihanmu: <b id="planName"></b></p>
+      <p id="price"></p>
+
+      <!-- Tombol sudah diubah -->
+      <button onclick="goToPayment()">Oke</button>
+
+    </div>
+  </div>
+
+<script>
+  function showPopup(plan, price) {
+    document.getElementById("planName").innerText = plan;
+    document.getElementById("price").innerText = price;
+    document.getElementById("checkoutBox").classList.add("show");
+  }
+
+  function closePopup() {
+    document.getElementById("checkoutBox").classList.remove("show");
+  }
+
+  function goToPayment() {
+    const paket = document.getElementById("planName").innerText;
+    const harga = document.getElementById("price").innerText;
+
+    localStorage.setItem("paketDipilih", paket);
+    localStorage.setItem("hargaPaket", harga);
+
+    window.location.href = "Metode Pembayaran.html";
+  }
+</script>
+
+</body>
+</html>

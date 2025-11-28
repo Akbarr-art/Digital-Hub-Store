@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sosial Media & Hiburan Premium</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background: linear-gradient(180deg,#071020 0%, #0b1530 100%);
+      color:#e6eef6;
+      overflow-x:hidden;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .left-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    /* ----- HAMBURGER MENU ----- */
+    .garis3 {
+      width: 32px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: .3s;
+
+      position: relative;
+      z-index: 3500; /* agar DI ATAS header dan overlay */
+    }
+
+    .garis3 div {
+      width: 100%;
+      height: 3.5px;
+      background: #ffb86b;
+      border-radius: 4px;
+      transition: .3s;
+    }
+
+    .garis3.active div:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .garis3.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .garis3.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    header h1 {
+      color:#ffb86b;
+      font-size:20px;
+      letter-spacing:0.5px;
+      white-space:nowrap;
+    }
+
+    .search-container input {
+      width: 260px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.07);
+      color:#fff;
+      outline:none;
+    }
+
+    .auth-buttons{
+      display:flex;
+      gap:10px;
+      margin-right: 50px; /* geser ke kiri sedikit */
+   }
+
+    .auth-buttons button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      color:#071527;
+      font-weight: bold;
+      box-shadow:0 8px 24px rgba(255,110,60,0.18);
+    }
+
+
+    /* =================== SIDE MENU =================== */
+    .side-menu{
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 260px;
+      background: #120a2e;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 50px 25px 25px;
+      transition: transform .3s ease;
+      transform: translateX(-100%);
+      z-index: 3000;  /* DI ATAS HEADER */
+    }
+
+    .side-menu.show{
+      transform: translateX(0);
+    }
+
+    /* TOMBOL X */
+    .close-btn{
+      font-size:22px;
+      cursor:pointer;
+      color:#ffffffcc;
+      background:none;
+      border:none;
+      position:absolute;
+      top:15px;
+      right:15px;
+      z-index:3501; /* highest */
+    }
+
+    .close-btn:hover{
+      color:#fff;
+    }
+
+    .side-menu h2{
+      color:#ffb86b;
+      font-size:22px;
+      margin-bottom:18px;
+    }
+
+    .side-menu a{
+      display:block;
+      padding:10px 0;
+      font-size:16px;
+      color:#ddd;
+      text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+
+    .side-menu a:hover{
+      color:#ffb86b;
+    }
+
+    /* OVERLAY */
+    .overlay{
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.55);
+      opacity:0;
+      pointer-events:none;
+      transition:.3s;
+      z-index:2500; /* di bawah menu, di atas header */
+    }
+
+    .overlay.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+
+    /* ================== GRID CARD =================== */
+    main{
+      margin-top:120px;
+    }
+
+    .container{
+      margin: 0 auto;
+      padding: 0 20px 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      max-width: 1180px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.05);
+      padding:22px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.06);
+      box-shadow:0 8px 30px rgba(0,0,0,0.32);
+      text-align:center;
+      transition:0.28s;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 12px 35px rgba(0,0,0,0.45);
+    }
+
+    .card img{
+      width:70px;
+      margin-bottom:16px;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    }
+
+    .card h2{
+      color:#ffb86b;
+      font-size:21px;
+      margin-bottom:14px;
+    }
+
+    ul{
+      text-align:left;
+      width:100%;
+      font-size:14px;
+      line-height:1.55;
+      margin:0;
+      padding-left:20px;
+      flex-grow:1;
+    }
+
+    ul li{
+      margin-bottom:6px;
+    }
+
+    .buy-btn{
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      border:none;
+      color:#071527;
+      font-weight:700;
+      padding:12px 16px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:15px;
+      width:100%;
+      box-shadow:0 8px 24px rgba(255,110,60,0.14);
+      transition:0.3s;
+      margin-top:16px;
+    }
+
+    .buy-btn:hover{
+      transform:scale(1.05);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER =================== -->
+  <header>
+    <div class="left-header">
+      <div class="garis3" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <h1>DIGITAL HUB STORE.ID</h1>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Cari" onkeyup="searchApp()">
+    </div>
+
+    <div class="auth-buttons">
+      <button>Daftar</button>
+      <button>Login</button>
+    </div>
+  </header>
+
+
+  <!-- =============== SIDE MENU =============== -->
+  <div class="side-menu" id="sideMenu">
+
+    <button class="close-btn" onclick="toggleMenu()">×</button>
+
+    <h2>Menu</h2>
+
+    <a href="Index.html">Beranda</a>
+    <a href="Store.html">Semua Layanan</a>
+    <a href="#">Pusat Bantuan</a>
+    <a href="#">Tentang Kami</a>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main>
+    <div class="container" id="appList">
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png">
+        <h2>X Premium</h2>
+        <ul>
+          <li>Edit tweet</li>
+          <li>Unggah video hingga 2 jam</li>
+          <li>Prioritas balasan</li>
+          <li>Dapat penghasilan iklan</li>
+        </ul>
+        <button class="buy-btn" onclick="goTo('X.html')">Beli Sekarang</button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+        <h2>YouTube Premium</h2>
+        <ul>
+          <li>Tanpa iklan</li>
+          <li>Putar background</li>
+          <li>YouTube Music</li>
+          <li>Download offline</li>
+        </ul>
+        <button class="buy-btn" onclick="goTo('youtube.html')">Beli Sekarang</button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111644.png">
+        <h2>Telegram Premium</h2>
+        <ul>
+          <li>Batas channel besar</li>
+          <li>Kecepatan download</li>
+          <li>Animasi eksklusif</li>
+          <li>Lencana premium</li>
+        </ul>
+        <button class="buy-btn" onclick="goTo('Telegram.html')">Beli Sekarang</button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png">
+        <h2>Discord Nitro</h2>
+        <ul>
+          <li>Upload besar</li>
+          <li>Emoji global</li>
+          <li>Kualitas video tinggi</li>
+          <li>Lencana Nitro</li>
+        </ul>
+        <button class="buy-btn" onclick="goTo('Discord.html')">Beli Sekarang</button>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732228.png">
+        <h2>Netflix Premium</h2>
+        <ul>
+          <li>Tanpa iklan</li>
+          <li>4K HDR</li>
+          <li>4 perangkat</li>
+          <li>Download film</li>
+        </ul>
+        <button class="buy-btn" onclick="goTo('Netflix.html')">Beli Sekarang</button>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    function goTo(page){
+      window.location.href = page;
+    }
+
+    function searchApp(){
+      const input = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card=>{
+        const title = card.querySelector('h2').textContent.toLowerCase();
+        card.style.display = title.includes(input) ? 'flex' : 'none';
+      });
+    }
+
+    function toggleMenu(){
+      const menu = document.getElementById("sideMenu");
+      const overlay = document.getElementById("overlay");
+      const hamburger = document.querySelector(".garis3");
+
+      menu.classList.toggle("show");
+      overlay.classList.toggle("show");
+      hamburger.classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paket Discord Nitro</title>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #071020;
+      color: #e6eef6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      font-weight: 800;
+      margin-bottom: 50px;
+      color: #ffb86b;
+      text-shadow: 0 0 8px rgba(255,184,107,0.6);
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .card {
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      width: 300px;
+      padding: 30px 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      border-color: #ffb86b;
+    }
+
+    .card h2 {
+      font-size: 1.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #ffb86b;
+    }
+
+    .card h3 {
+      font-size: 1.3em;
+      margin: 5px 0;
+      color: #e6eef6;
+    }
+
+    .card h3 span {
+      font-size: 0.8em;
+      color: #cfd9e8;
+    }
+
+    .year {
+      color: #b8c2d8;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      text-align: left;
+      padding-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    ul li {
+      margin: 8px 0;
+      list-style: none;
+      padding-left: 10px;
+      color: #dce5f0;
+    }
+
+    .subscribe-btn {
+      width: 100%;
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      color: #071527;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 8px 24px rgba(255,110,60,0.25);
+    }
+
+    .subscribe-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .popular {
+      position: absolute;
+      top: 12px;
+      right: 20px;
+      background-color: #ffb86b;
+      color: #071527;
+      font-size: 0.8em;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .nitro {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,184,107,0.4);
+    }
+
+    @media (max-width: 700px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* ===== MODAL ===== */
+    .modal-container {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-box {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 16px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .modal-box h2 {
+      color: #ffb86b;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ffb86b;
+      transition: 0.2s;
+    }
+
+    .close:hover {
+      color: #ffffff;
+      transform: scale(1.2);
+    }
+
+    .modal-btn {
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      border: none;
+      padding: 10px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #071527;
+      font-weight: bold;
+      box-shadow: 0 8px 20px rgba(255,110,60,0.25);
+      transition: 0.3s;
+    }
+
+    .modal-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>PILIH PAKET YANG TEPAT UNTUKMU</h1>
+
+    <div class="cards">
+      <div class="card paket" data-id="Nitro Basic" data-price="Rp 29.000/bulan">
+        <h2>NITRO BASIC</h2>
+        <h3>IDR 29,000.00<span>/month</span></h3>
+        <p class="year">IDR 289,000.00/year</p>
+        <ul>
+          <li>📤 50MB uploads</li>
+          <li>😄 Custom emoji anywhere</li>
+          <li>🎨 Unlimited Super Reactions</li>
+          <li>🏅 Special Nitro badge on your profile</li>
+        </ul>
+        <button class="subscribe-btn" onclick="openModal(this)">Berikutnya</button>
+      </div>
+
+      <div class="card nitro paket" data-id="Nitro Full" data-price="Rp 83.169/bulan">
+        <span class="popular">POPULAR</span>
+        <h2>NITRO FULL</h2>
+        <h3>IDR 83,169.00<span>/month</span></h3>
+        <p class="year">IDR 831,690.00/year</p>
+        <ul>
+          <li>📤 500MB uploads</li>
+          <li>😄 Custom emoji anywhere</li>
+          <li>🎨 Unlimited Super Reactions</li>
+          <li>🎥 HD video streaming</li>
+          <li>🚀 2 Server Boosts</li>
+          <li>👤 Custom profiles and more!</li>
+        </ul>
+        <button class="subscribe-btn" onclick="openModal(this)">Berikutnya</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL ==== -->
+  <div id="popup" class="modal-container">
+    <div class="modal-box">
+      <span class="close" onclick="closeModal()">×</span>
+      <h2>Konfirmasi</h2>
+      <p>Pilihanmu: <b id="selected"></b></p>
+      <p id="price"></p>
+      <button class="modal-btn" onclick="goToPayment()">Oke</button>
+    </div>
+  </div>
+
+<script>
+  function openModal(button) {
+    let card = button.closest(".card");
+    let name = card.dataset.id;
+    let price = card.dataset.price;
+
+    document.getElementById("selected").innerText = name;
+    document.getElementById("price").innerText = price;
+    document.getElementById("popup").style.display = "flex";
+  }
+
+  function goToPayment() {
+    let name = document.getElementById("selected").innerText;
+    let price = document.getElementById("price").innerText;
+
+    localStorage.setItem("paketDipilih", name);
+    localStorage.setItem("hargaPaket", price);
+
+    window.location.href = "Metode Pembayaran.html";
+  }
+
+  function closeModal() {
+    document.getElementById("popup").style.display = "none";
+  }
+</script>
+
+</body>
+</html>

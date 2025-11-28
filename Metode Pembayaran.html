@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilih Metode Pembayaran</title>
+
+<style>
+    body {
+        font-family:'Poppins',sans-serif;
+        margin:0;
+        background: linear-gradient(180deg,#071020 0%, #0b1530 100%);
+        color:white;
+        text-align:center;
+    }
+
+    h2 {
+        margin-top:40px;
+        font-size:28px;
+        font-weight:600;
+        color:#ffb65c;
+    }
+
+    /* GRID PAYMENT */
+    .payment-container {
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:25px;
+        max-width:1000px;
+        margin:40px auto;
+        padding:10px;
+    }
+
+    .payment-box {
+        background:#0f1d36;
+        border-radius:18px;
+        border:1px solid rgba(255,255,255,0.05);
+        box-shadow:0px 4px 15px rgba(0,0,0,0.3);
+        padding:25px;
+        min-height:220px;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        align-items:center;
+        transition:0.3s;
+        cursor:pointer;
+    }
+
+    .payment-box:hover {
+        transform:translateY(-6px);
+        box-shadow:0px 10px 25px rgba(255,180,68,0.15);
+    }
+
+    .payment-box img {
+        width:100px;
+        height:60px;
+        object-fit:contain;
+        filter:brightness(0.95);
+    }
+
+    .btn-pilih {
+        background:#ff855a;
+        color:white;
+        border:none;
+        padding:10px 20px;
+        border-radius:18px;
+        font-size:14px;
+        font-weight:bold;
+        transition:0.2s;
+    }
+
+    .btn-pilih:hover {
+        background:#ff9d72;
+    }
+
+    /* POPUP */
+    .popup {
+        position:fixed;
+        top:0;left:0;
+        width:100%;height:100%;
+        background:rgba(0,0,0,0.65);
+        display:none;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .popup-box {
+        background:#10203d;
+        padding:25px;
+        width:330px;
+        border-radius:15px;
+        text-align:center;
+        animation:fadeIn .3s ease;
+        position:relative;
+        border:1px solid rgba(255,255,255,0.05);
+        box-shadow:0px 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .close-btn {
+        position:absolute;
+        top:10px;right:12px;
+        border:none;
+        background:none;
+        font-size:22px;
+        cursor:pointer;
+        color:#ff6666;
+        transition:.2s;
+    }
+    .close-btn:hover {color:#ff3838;}
+
+    /* Thank You Popup */
+    #thankPopup .popup-box {
+        border:1px solid #4aff9a;
+    }
+
+    /* INVOICE PAGE */
+    #invoicePage {
+        display:none;
+        padding-bottom:50px;
+    }
+
+    .invoice-box {
+        background:#0f1d36;
+        border:1px solid rgba(255,255,255,0.05);
+        padding:20px;
+        border-radius:15px;
+        max-width:400px;
+        margin:auto;
+        box-shadow:0px 8px 25px rgba(0,0,0,0.35);
+        text-align:left;
+    }
+
+    #kodeBayar {
+        background:#1a2b4e;
+        padding:12px;
+        border-radius:10px;
+        font-size:22px;
+        font-weight:bold;
+        color:#ffcd72;
+        text-align:center;
+    }
+
+    .btn {
+        padding:12px 20px;
+        border:none;
+        cursor:pointer;
+        margin-top:10px;
+        border-radius:12px;
+        font-size:15px;
+        color:white;
+        width:100%;
+        transition:0.2s;
+    }
+
+    .btn:hover {opacity:0.85;}
+
+    .btn-copy {background:#3498ff;}
+    .btn-done {background:#28c76f;}
+    .btn-cancel {background:#ff4d4d;}
+
+    /* BARCODE CENTER */
+    .barcode-wrapper {
+        display:flex;
+        justify-content:center;
+        margin-top:15px;
+    }
+
+    @keyframes fadeIn {
+        from {opacity:0; transform:scale(0.8);}
+        to {opacity:1; transform:scale(1);}
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Pilih Salah Satu Metode Pembayaran</h2>
+
+<div class="payment-container">
+
+    <div class="payment-box" onclick="pilih('BCA Virtual Account')">
+        <img src="https://dashboard.laznasdewandakwah.or.id/storage/galleries/2022/3/1646109577va%20bca%20kotak..jpg">
+        <p>BCA Virtual Account</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('GO-PAY')">
+        <img src="https://i.pinimg.com/736x/c7/69/e5/c769e5359e82c62a939f686723f1205a.jpg">
+        <p>GO-PAY</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('BNI Virtual Account')">
+        <img src="https://dashboard.laznasdewandakwah.or.id/storage/thumbnails/2022/3/petunjuk-pembayaran-bni-virtual-account_jpg">
+        <p>BNI Virtual Account</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('QRIS')">
+        <img src="https://images.seeklogo.com/logo-png/39/1/quick-response-code-indonesia-standard-qris-logo-png_seeklogo-391791.png">
+        <p>QRIS</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('DANA')">
+        <img src="https://images.seeklogo.com/logo-png/39/1/dana-e-wallet-app-logo-png_seeklogo-399948.png">
+        <p>DANA</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('OVO')">
+        <img src="https://pbs.twimg.com/media/EUbePLEU0AIpder.jpg">
+        <p>OVO</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('Alfamart')">
+        <img src="https://logos-world.net/wp-content/uploads/2022/04/Alfamart-Symbol.png">
+        <p>Alfamart</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+    <div class="payment-box" onclick="pilih('Indomaret')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Logo_Indomaret.png/1280px-Logo_Indomaret.png">
+        <p>Indomaret</p>
+        <button class="btn-pilih">Pilih</button>
+    </div>
+
+</div>
+
+<!-- POPUP PILIH -->
+<div class="popup" id="popup">
+    <div class="popup-box">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <h3 id="selectedPay"></h3>
+        <p>Tekan lanjut untuk masuk ke halaman pembayaran.</p>
+        <button onclick="goInvoice()" class="btn-pilih" style="width:100%">Lanjut</button>
+    </div>
+</div>
+
+<!-- POPUP THANK YOU -->
+<div class="popup" id="thankPopup">
+    <div class="popup-box">
+        <h2 style="color:#4aff9a;">🎉 Pembayaran Berhasil!</h2>
+        <p>Terima kasih sudah melakukan pembayaran.<br>Pesanan kamu sedang diproses 👍</p>
+        <button onclick="goHome()" class="btn btn-done">🏠 Kembali ke Beranda</button>
+    </div>
+</div>
+
+<!-- INVOICE PAGE -->
+<div id="invoicePage">
+    <h2>🔔 Menunggu Pembayaran</h2>
+    <p>Silakan selesaikan pembayaran sebelum waktu habis.</p>
+
+    <div class="invoice-box">
+
+        <p><strong>Metode Pembayaran:</strong> <span id="invoiceMethod"></span></p>
+
+        <p><strong>Paket:</strong> <span id="invoicePaket"></span></p>
+
+        <p><strong>Total:</strong> <span id="totalHarga"></span></p>
+
+        <p><strong>Kode Pembayaran:</strong></p>
+
+        <h2 id="kodeBayar">----</h2>
+
+        <!-- BARCODE WRAPPER -->
+        <div class="barcode-wrapper">
+            <img id="barcodeImage" src="" style="width:230px; display:none;">
+        </div>
+
+        <button class="btn btn-copy" onclick="copyText()">📋 Salin Kode Pembayaran</button>
+
+        <p style="margin-top:15px;font-size:18px;">
+            ⏳ Batas Waktu: <strong id="timer">15:00</strong>
+        </p>
+    </div>
+
+    <button class="btn btn-done" onclick="showSuccess()">✔ Saya Sudah Bayar</button><br><br>
+    <button class="btn btn-cancel" onclick="window.location.reload()">❌ Batalkan</button>
+</div>
+
+<script>
+let selectedPay;
+
+// Ambil data paket dari localStorage
+let paketDipilih = localStorage.getItem("paketDipilih");
+let hargaPaket = localStorage.getItem("hargaPaket");
+
+// Jika tidak ada harga → kembali ke store
+if (!hargaPaket) {
+    alert("Silakan pilih paket terlebih dahulu.");
+    window.location.href = "Store.html";
+}
+
+// Normalisasi harga
+let angkaHarga = parseInt(hargaPaket.replace(/[^0-9]/g, ""));
+
+// Hitung diskon 20%
+let diskon = Math.floor(angkaHarga * 0.20);
+let hargaSetelahDiskon = angkaHarga - diskon;
+
+// Format Rupiah
+function formatRupiah(num) {
+    return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function pilih(method) {
+    selectedPay = method;
+    document.getElementById("selectedPay").innerText =
+        "Metode Dipilih: " + method;
+    document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function goInvoice() {
+    closePopup();
+
+    document.getElementById("invoiceMethod").innerText = selectedPay;
+    document.getElementById("invoicePaket").innerText = paketDipilih;
+
+    // Total setelah diskon
+    document.getElementById("totalHarga").innerText =
+        formatRupiah(hargaSetelahDiskon) + " (Diskon 20%)";
+
+    document.getElementById("invoicePage").style.display = "block";
+
+    const kode = Math.floor(Math.random() * 90000000000) + 10000000000;
+    document.getElementById("kodeBayar").innerText = kode;
+
+    tampilkanBarcode(selectedPay, kode);
+
+    startTimer();
+}
+
+function tampilkanBarcode(method, kodePembayaran) {
+    const barcode = document.getElementById("barcodeImage");
+    barcode.style.display = "block";
+
+    switch(method) {
+        case "BCA Virtual Account":
+        case "BNI Virtual Account":
+            break;
+
+        case "QRIS":
+        case "GO-PAY":
+        case "DANA":
+        case "OVO":
+            barcode.src = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + kodePembayaran;
+            break;
+
+        case "Alfamart":
+        case "Indomaret":
+            let kode12 = kodePembayaran.toString().padStart(12, "0").slice(0, 12);
+            barcode.src = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + kode12;
+            break;
+
+        default:
+            barcode.style.display = "none";
+            break;
+    }
+}
+
+function copyText() {
+    navigator.clipboard.writeText(
+        document.getElementById("kodeBayar").innerText
+    );
+    alert("Kode pembayaran disalin!");
+}
+
+function showSuccess() {
+    document.getElementById("thankPopup").style.display = "flex";
+}
+
+function goHome() {
+    window.location.href = "Store.html";
+}
+
+let timeLeft = 900;
+function startTimer() {
+    setInterval(() => {
+        if (timeLeft <= 0) return;
+
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+
+        document.getElementById("timer").innerText =
+            `${m}:${s < 10 ? "0" + s : s}`;
+
+        timeLeft--;
+    }, 1000);
+}
+</script>
+</body>
+</html>

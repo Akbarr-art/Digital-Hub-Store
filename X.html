@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>X — (Premium+)</title>
+<style>
+  :root {
+  --bg: #02060d;
+  --panel: #0a121f;
+  --muted: #9aaec6;
+  --card: #0b1424;
+  --accent: #ffb86b; /* changed to gold */
+  --accent-glow: 0 0 12px #ffb86b;
+  --success: #36d07a;
+  --glass: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.08);
+  --radius: 14px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: radial-gradient(circle at top, #041022, #071020 70%); /* slightly adjusted to match site */
+  color: #e8f0fa;
+}
+
+/* main modal */
+.center-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+.modal {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid var(--border);
+  box-shadow: 0 0 40px rgba(255,184,107,0.12); /* gold-ish glow */
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+}
+
+/* left column */
+.left { padding: 28px 26px; }
+.title-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+}
+.pill {
+  background: rgba(255,184,107,0.08);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(255,184,107,0.25);
+}
+h1 { margin: 0; font-size: 20px; color: #e6f3ff; text-shadow: var(--accent-glow); }
+p.lead { margin: 8px 0 16px; color: var(--muted); font-size: 14px; }
+
+.features {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  max-height: 440px;
+  overflow: auto;
+}
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 6px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  transition: background 0.2s;
+}
+.feature:hover { background: rgba(255,184,107,0.03); } /* soft gold hover */
+.check {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255,184,107,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,184,107,0.18);
+}
+.check svg { width: 16px; height: 16px; fill: var(--accent); }
+.feature .ftext { font-size: 14px; color: #e6eef8; }
+.feature .sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+ /* right column */
+.right {
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.008), rgba(255,255,255,0.01));
+  border-left: 1px solid var(--border);
+}
+.plan-head { text-align: center; }
+.plan-head h3 {
+  margin: 6px 0 0;
+  font-size: 18px;
+  color: #e8f8ff;
+  text-shadow: var(--accent-glow);
+}
+.toggle {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 14px 0;
+}
+.toggle button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.toggle button.active {
+  background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+  color: #071527;
+  border: none;
+  box-shadow: 0 0 15px rgba(255,184,107,0.25);
+}
+.price-card {
+  background: rgba(255,255,255,0.02);
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.price { font-size: 22px; font-weight: 700; margin: 6px 0; color: var(--accent); text-shadow: var(--accent-glow); }
+.save { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.cta { margin-top: 14px; display: flex; gap: 10px; flex-direction: column; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  background: linear-gradient(90deg,#ffb86b,#ff6b6b); /* gradient gold */
+  color: #071527;
+  box-shadow: 0 8px 24px rgba(255,110,60,0.18);
+  transition: 0.2s;
+}
+.btn:hover { box-shadow: 0 12px 32px rgba(255,110,60,0.22); transform: translateY(-1px); }
+.secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.secondary:hover { border-color: var(--accent); color: var(--accent); }
+.fine { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
+
+ /* scrollbar */
+.features::-webkit-scrollbar { width: 8px; }
+.features::-webkit-scrollbar-thumb { background: rgba(255,184,107,0.12); border-radius: 999px; }
+
+ /* responsive */
+@media (max-width:880px){
+  .modal { grid-template-columns: 1fr; max-width: 680px; }
+  .right { order: 2; }
+}
+
+/* modal overlay for details */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.details-modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 540px;
+  color: #e6eef8;
+  padding: 26px 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+.modal-overlay.show .details-modal {
+  transform: translateY(0);
+  opacity: 1;
+}
+.close-modal {
+  position: absolute;
+  top: 14px;
+  right: 22px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 26px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-modal:hover { color: var(--accent); }
+.details-modal h2 {
+  text-align: center;
+  color: var(--accent);
+  margin-top: 0;
+  text-shadow: var(--accent-glow);
+}
+.section { margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; }
+.section h3 { font-size: 15px; color: #ffb86b; margin-bottom: 6px; }
+.section ul { list-style: none; padding: 0; margin: 0; }
+.section ul li {
+  padding: 6px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: #c9d6e2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section ul li:last-child { border-bottom: none; }
+.section ul li svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--accent);
+}
+
+/* Checkout Modal Enhancement */
+#checkoutModal .details-modal {
+  max-width:380px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(255,184,107,0.18);
+}
+</style>
+</head>
+<body>
+  <div class="center-wrap">
+    <div class="modal" role="dialog" aria-labelledby="sub-title">
+      <div class="left">
+        <div class="title-row">
+          <div class="pill">Premium+</div>
+          <div style="flex:1">
+            <h1 id="sub-title">Subscribe</h1>
+            <p class="lead">Dapatkan pengalaman lebih: edit post, background playback, download video, dan lainnya.</p>
+          </div>
+        </div>
+
+        <div class="features" aria-live="polite">
+          <div class="feature">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg></div>
+            <div><div class="ftext">Enhanced Experience</div><div class="sub">Edit post, longer posts & videos, background playback, download videos.</div></div>
+          </div>
+          <div class="feature">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg></div>
+            <div><div class="ftext">Creator Hub</div><div class="sub">Akses fitur creator: dibayar untuk posting dan subscription creator.</div></div>
+          </div>
+          <div class="feature">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg></div>
+            <div><div class="ftext">Ads in For You</div><div class="sub">Kurangi atau hilangkan iklan di feed.</div></div>
+          </div>
+          <div class="feature">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg></div>
+            <div><div class="ftext">Reader & Top Articles</div><div class="sub">Akses mode reader dan artikel unggulan.</div></div>
+          </div>
+          <div class="feature">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg></div>
+            <div><div class="ftext">Undo & Reply Boost</div><div class="sub">Fitur undo post dan reply boost untuk visibilitas lebih.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="plan-head">
+          <div class="pill" style="margin:0 auto 8px">Premium+</div>
+          <h3>Pilih Paket</h3>
+          <div class="toggle" role="tablist" aria-label="Billing period">
+            <button id="annualBtn" class="active" role="tab" aria-selected="true">Annual plan</button>
+            <button id="monthlyBtn" role="tab" aria-selected="false">Monthly plan</button>
+          </div>
+        </div>
+
+        <div class="price-card" aria-live="polite">
+          <div style="display:flex;gap:12px;align-items:center;justify-content:center">
+            <div style="text-align:left">
+              <div style="font-size:13px;color:var(--muted)">Annual plan <span style="color:var(--success);font-weight:700">SAVE 12%</span></div>
+              <div class="price" id="priceText">Rp 843.600 / year</div>
+              <div class="save">( Rp 843.600 per year billed annually)</div>
+            </div>
+          </div>
+          <div class="cta">
+            <button class="btn" id="subscribeBtn">Berikutnya</button>
+            <button class="secondary" id="learnBtn">Compare plans & details</button>
+          </div>
+          <div class="fine">By subscribing you agree to the Terms of Service. Subscriptions auto-renew until cancelled.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compare Plans Modal -->
+  <div class="modal-overlay" id="detailsModal">
+    <div class="details-modal">
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+      <h2>Compare Plans & Details</h2>
+      <div class="section">
+        <h3>Enhanced Experience</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg>Grok Early Access</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg>Ads in For You — None</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg>Background Playback</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg>Download Videos</li>
+        </ul>
+      </div>
+      <div class="section">
+        <h3>Creator Features</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg>Monetization Access</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.212L5.13 10.39a1 1 0 1 0-1.413 1.415l5.89 5.91a1 1 0 0 0 1.413 0l9.265-9.306z"/></svg>Subscription Creator Mode</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="details-modal" style="max-width:400px; text-align:center; position:relative;">
+      <button class="close-modal" id="closeCheckout">&times;</button>
+      <h2 style="margin-bottom:10px;">Konfirmasi</h2>
+      <p id="chosenPlan" style="font-size:15px; margin-bottom:4px;"></p>
+      <p id="chosenPrice" style="font-size:17px; font-weight:bold; color:#ffb86b; margin-bottom:20px;"></p>
+      <button class="btn" id="okCheckout" style="width:120px; margin:auto;">Oke</button>
+    </div>
+  </div>
+
+<script>
+const annualBtn = document.getElementById('annualBtn');
+const monthlyBtn = document.getElementById('monthlyBtn');
+const priceText = document.getElementById('priceText');
+const subscribeBtn = document.getElementById('subscribeBtn');
+const learnBtn = document.getElementById('learnBtn');
+const detailsModal = document.getElementById('detailsModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+
+let billing = 'annual';
+const prices = {
+  annual: { label: 'Rp 843.600 / year' },
+  monthly: { label: 'Rp 84.300 / month' }
+};
+
+function setBilling(mode){
+  billing = mode;
+  if(mode === 'annual'){
+    annualBtn.classList.add('active');
+    monthlyBtn.classList.remove('active');
+  } else {
+    monthlyBtn.classList.add('active');
+    annualBtn.classList.remove('active');
+  }
+  priceText.textContent = prices[mode].label;
+}
+
+annualBtn.addEventListener('click', ()=> setBilling('annual'));
+monthlyBtn.addEventListener('click', ()=> setBilling('monthly'));
+
+// Checkout Popup
+const checkoutModal = document.getElementById("checkoutModal");
+const closeCheckout = document.getElementById("closeCheckout");
+const okCheckout = document.getElementById("okCheckout");
+
+subscribeBtn.addEventListener('click', ()=>{
+  const plan = billing === 'annual' ? 'Annual Plan' : 'Monthly Plan';
+  const price = billing === 'annual' ? 'Rp 843.600 / year' : 'Rp 84.300 / month';
+
+  document.getElementById('chosenPlan').innerHTML = `Pilihanmu: <strong>${plan}</strong>`;
+  document.getElementById('chosenPrice').textContent = price;
+
+  // Simpan ke localStorage
+  localStorage.setItem("paketDipilih", plan);
+  localStorage.setItem("hargaPaket", price);
+
+  checkoutModal.classList.add('show');
+});
+
+// --- Klik OK = tutup dan redirect ke pembayaran
+okCheckout.onclick = ()=>{
+  checkoutModal.classList.remove("show");
+  window.location.href = "Metode Pembayaran.html";
+};
+
+closeCheckout.onclick = ()=> checkoutModal.classList.remove("show");
+
+checkoutModal.addEventListener("click", (e)=>{
+  if(e.target === checkoutModal) checkoutModal.classList.remove("show");
+});
+
+// Compare Plans
+learnBtn.addEventListener('click', ()=> detailsModal.classList.add('show'));
+closeModalBtn.addEventListener('click', ()=> detailsModal.classList.remove('show'));
+detailsModal.addEventListener('click', e=>{
+  if(e.target===detailsModal) detailsModal.classList.remove('show');
+});
+</script>
+
+</body>
+</html>

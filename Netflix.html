@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paket Netflix Premium</title>
+  <style>
+    body {
+      background-color: #071020;
+      color: #e6eef6;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      width: 700px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffb86b;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px rgba(255,184,107,0.6);
+    }
+
+    .paket-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .paket {
+      background-color: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 15px 25px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      width: 130px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .paket:hover {
+      border-color: #ffb86b;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    }
+
+    .paket.active {
+      background: linear-gradient(140deg, #ffb86b, #ff6b6b);
+      color: #071527;
+      font-weight: 700;
+      border-color: transparent;
+    }
+
+    .tag {
+      background-color: #ffb86b;
+      color: #071527;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+    }
+
+    table td {
+      padding: 10px 5px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      color: #e6eef6;
+    }
+
+    .next-btn {
+      width: 100%;
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      color: #071527;
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+      margin-top: 20px;
+      box-shadow: 0 8px 25px rgba(255,110,60,0.22);
+    }
+
+    .next-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      backdrop-filter: blur(3px);
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.05);
+      padding: 25px;
+      width: 350px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      display: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translate(-50%, -60%) scale(0.9); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .modal h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #ffb86b;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(255,184,107,0.5);
+    }
+
+    .btn {
+      margin-top: 20px;
+      background: linear-gradient(90deg,#ffb86b,#ff6b6b);
+      border: none;
+      padding: 10px 25px;
+      color: #071527;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 8px 24px rgba(255,110,60,0.25);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PILIH PAKET YANG TEPAT UNTUKMU</h1>
+
+    <div class="paket-container">
+      <div class="paket" data-id="ponsel">
+        <h3>Ponsel</h3>
+        <p>480p</p>
+      </div>
+      <div class="paket" data-id="dasar">
+        <h3>Dasar</h3>
+        <p>720p</p>
+      </div>
+      <div class="paket" data-id="standar">
+        <h3>Standar</h3>
+        <p>1080p</p>
+      </div>
+      <div class="paket active" data-id="premium">
+        <h3>Premium</h3>
+        <p>4K + HDR</p>
+        <span class="tag">Terpopuler</span>
+      </div>
+    </div>
+
+    <table id="detailTabel"></table>
+
+    <button class="next-btn" id="checkoutBtn">Berikutnya</button>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="modal" id="modal">
+    <h2>Konfirmasi Paket</h2>
+    <p id="result"></p>
+    <button class="btn" onclick="goToPayment()">Oke</button>
+  </div>
+
+<script>
+let selectedPay;
+
+// Ambil data paket (Discord / Netflix / Telegram)
+let paketDipilih = localStorage.getItem("paketDipilih") || "-";
+let hargaPaket = localStorage.getItem("hargaPaket") || "Rp0";
+
+function pilih(method) {
+    selectedPay = method;
+    document.getElementById("selectedPay").innerText = "Metode Dipilih: " + method;
+    document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function goInvoice() {
+    closePopup();
+
+    // Tampilkan metode pembayaran
+    document.getElementById("invoiceMethod").innerText = selectedPay;
+
+    // Harga otomatis dari: Discord, Netflix, Telegram
+    document.getElementById("totalHarga").innerText = hargaPaket;
+
+    // Tampilkan invoice
+    document.getElementById("invoicePage").style.display = "block";
+
+    // Generate kode pembayaran unik
+    document.getElementById("kodeBayar").innerText =
+        Math.floor(Math.random() * 90000000000) + 10000000000;
+
+    startTimer();
+}
+
+function copyText() {
+    navigator.clipboard.writeText(document.getElementById("kodeBayar").innerText);
+    alert("Kode pembayaran disalin!");
+}
+
+function showSuccess() {
+    document.getElementById("thankPopup").style.display = "flex";
+}
+
+function goHome() {
+    window.location.href = "Store.html"; 
+}
+
+let timeLeft = 900;
+function startTimer() {
+    setInterval(() => {
+        if (timeLeft <= 0) return;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        document.getElementById("timer").innerText = 
+            `${m}:${s < 10 ? "0" + s : s}`;
+        timeLeft--;
+    }, 1000);
+}
+</script>
+
+
+</body>
+</html>
